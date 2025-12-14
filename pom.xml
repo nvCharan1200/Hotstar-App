@@ -11,27 +11,25 @@
     <packaging>war</packaging>
 
     <name>myapp</name>
-    <url>http://maven.apache.org</url>
 
     <!-- ✅ Project-wide properties -->
     <properties>
-        <!-- Java version -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-
-        <!-- Fix encoding warning -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!-- Application dependency -->
+
+        <!-- ✅ Servlet API (provided by Tomcat, DO NOT bundle) -->
         <dependency>
-            <groupId>com.oracle.bedrock</groupId>
-            <artifactId>bedrock-runtime-maven</artifactId>
-            <version>5.1.2</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- Test dependency -->
+        <!-- ✅ JUnit (testing only) -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -39,16 +37,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Servlet API (provided by Tomcat) -->
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
+
+        <!-- WAR name will be myapp.war -->
         <finalName>myapp</finalName>
 
         <plugins>
@@ -64,25 +57,18 @@
                 </configuration>
             </plugin>
 
-            <!-- ✅ WAR packaging for Tomcat -->
+            <!-- ✅ REQUIRED: WAR plugin for Java 17 + Jenkins -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.4.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
 
-            <!-- ✅ SonarQube plugin -->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.10.0.2594</version>
-            </plugin>
-
         </plugins>
+
     </build>
 
 </project>
-
